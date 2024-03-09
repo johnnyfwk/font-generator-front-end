@@ -3,8 +3,9 @@ import { useState } from "react";
 import { allFonts } from "../content/fonts";
 
 export default function Home() {
+    const placeholderText = "Enter your text to see it in different fonts.";
     const [ inputText, setInputText ] = useState("");
-    const [ outputFontPlaceHolderText, setOutputFontPlaceHolderText ] = useState("Enter your text to see it in different fonts.");
+    const [ outputFontPlaceHolderText, setOutputFontPlaceHolderText ] = useState(placeholderText);
 
     function handleInputText(event) {
         setInputText(event.target.value);
@@ -13,6 +14,7 @@ export default function Home() {
 
     function handleClearTextButton() {
         setInputText("");
+        setOutputFontPlaceHolderText(placeholderText);
     }
 
     return (
