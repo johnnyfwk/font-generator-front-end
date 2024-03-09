@@ -3,19 +3,34 @@ import { useState } from "react";
 import { allFonts } from "../content/fonts";
 
 export default function Home() {
-    const placeholderText = "Enter your text to see it in different fonts.";
+    const placeholderText = "Enter your text to see it in different fonts";
+
     const [ inputText, setInputText ] = useState("");
-    const [ outputFontPlaceHolderText, setOutputFontPlaceHolderText ] = useState(placeholderText);
+    const [ copyButtonText, setCopyButtonText ] = useState("Copy");
+    const [ buttonNumberClicked, setButtonNumberClicked ] = useState(null);
 
     function handleInputText(event) {
         setInputText(event.target.value);
-        setOutputFontPlaceHolderText(event.target.value);
     }
 
     function handleClearTextButton() {
         setInputText("");
-        setOutputFontPlaceHolderText(placeholderText);
     }
+
+    function convertText(text, characters) {
+        let convertedText = '';
+        for (let character of text) {
+            convertedText += characters[character] || character;
+        }
+        return convertedText;
+    }
+
+    function copyToClipboard(buttonNumber, text, characters) {
+        setButtonNumberClicked(buttonNumber);
+        navigator.clipboard.writeText(convertText(text, characters));
+        setCopyButtonText("Copied");
+        setTimeout(() => setCopyButtonText("Copy"), 2000);
+    };
 
     return (
         <div>
@@ -40,7 +55,7 @@ export default function Home() {
                             name="input-text"
                             value={inputText}
                             onChange={handleInputText}
-                            placeholder={outputFontPlaceHolderText}
+                            placeholder={placeholderText}
                         ></textarea>
                         <div>
                             <button
@@ -57,8 +72,15 @@ export default function Home() {
                         {allFonts.map((font, index) => {
                             return (
                                 <div key={index}>
-                                    <div style={{fontFamily: font.name}}>{font.name}</div>
-                                    <div style={{fontFamily: font.name}}>{outputFontPlaceHolderText}</div>
+                                    <div>{font.name}</div>
+                                    <div
+                                        style={{fontFamily: font.name}}
+                                        className="font-text"
+                                    >{convertText(inputText || placeholderText, font.characters)}</div>
+
+                                    <button
+                                        onClick={() => copyToClipboard(index, inputText || placeholderText, font.characters)}
+                                    >{buttonNumberClicked === index ? copyButtonText : "Copy"}</button>
                                 </div>
                             )
                         })}

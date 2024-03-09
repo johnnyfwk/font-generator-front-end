@@ -31,12 +31,20 @@ form {
     gap: 10px;
 }
 
+button {
+    cursor: pointer;
+}
+
 #input-text {
-    min-height: 200px;
-    width: 100%;
+    min-height: 100px;
+    word-break: break-all;
 }
 
 #output-fonts-wrapper {
     display: grid;
     gap: 20px;
+}
+
+.font-text {
+    word-break: break-all;
 }
