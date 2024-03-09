@@ -23,3 +23,14 @@ main {
 footer {
     background: grey;
 }
+
+form {
+    display: grid;
+    gap: 10px;
+}
+
+#input-text {
+    overflow-y: hidden;
+    min-height: 50px;
+    width: 100%;
+}
