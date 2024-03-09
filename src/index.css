@@ -18,6 +18,8 @@ header {
 
 main {
     background: pink;
+    display: grid;
+    gap: 30px;
 }
 
 footer {
@@ -30,7 +32,11 @@ form {
 }
 
 #input-text {
-    overflow-y: hidden;
-    min-height: 50px;
+    min-height: 200px;
     width: 100%;
+}
+
+#output-fonts-wrapper {
+    display: grid;
+    gap: 20px;
 }
