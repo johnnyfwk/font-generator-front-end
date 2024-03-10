@@ -1,57 +1,3 @@
-// export function convertText(
-//     text,
-//     characters,
-//     openingTextWrapper,
-//     closingTextWrapper,
-//     openingWordWrapper,
-//     closingWordWrapper,
-//     openingCharacterWrapper,
-//     closingCharacterWrapper
-// ) {
-//     let convertedText = text;
-
-//     if (characters) {
-//         let newText = "";
-//         for (let character of convertedText) {
-//             newText += characters[character] || character;
-//         }
-//         convertedText = newText;
-//     }
-
-//     if (openingCharacterWrapper && closingCharacterWrapper) {
-//         let wrapperText = "";
-//         for (let character of convertedText) {
-//             let wrapperCharacter = "";
-//             if (character !== " ") {
-//                 wrapperCharacter += openingCharacterWrapper + character + closingCharacterWrapper;
-//             } else {
-//                 wrapperCharacter += character;
-//             }
-//             wrapperText += wrapperCharacter;
-//         }
-//         convertedText = wrapperText;
-//     }
-
-//     if (openingWordWrapper && closingWordWrapper) {
-//         const words = convertedText.split(' ');
-//         let arrayOfWords = [];
-//         for (let word of words) {
-//             arrayOfWords.push(openingWordWrapper + word + closingWordWrapper)
-//         }
-//         convertedText = arrayOfWords.join(" ")
-//     }
-
-//     if (openingTextWrapper) {
-//         convertedText = openingTextWrapper + convertedText;
-//     }
-
-//     if (closingTextWrapper) {
-//         convertedText = convertedText + closingTextWrapper;
-//     }
-
-//     return convertedText;
-// }
-
 export function separateWords(text, separator) {
     const words = text.split(' ');  
     const separatedString = words.join(" " + separator + " ");  
@@ -66,6 +12,14 @@ export function separateCharacters(text, separator) {
     }
     const result = arrayOfWords.join(" ");
     return result;
+}
+
+export function addPrefix(text, prefix) {
+    return prefix + " " + text;
+}
+
+export function addSuffix(text, suffix) {
+    return text + " " + suffix;
 }
 
 export function toUppercase(text) {

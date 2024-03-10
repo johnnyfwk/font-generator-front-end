@@ -21,17 +21,25 @@ export default function Home() {
     const [ isPascalCase, setIsPascalCase ] = useState(false);
     const [ isURLFriendly, setIsURLFriendly ] = useState(false);
 
+    const selectedSeparatorLabel = "";
     const [ selectedSeparator, setSelectedSeparator ] = useState("");
     const [ isSeparateWords, setIsSeparateWords ] = useState(false);
     const [ isSeparateCharacters, setIsSeparateCharacters ] = useState(false);
 
+    const selectedPrefixLabel = "Prefix:";
+    const [ selectedPrefix, setSelectedPrefix ] = useState("");
+    const selectedSuffixLabel = "Suffix:";
+    const [ selectedSuffix, setSelectedSuffix ] = useState("");
+
     useEffect(() => {
         let customisedText;
+
         if (!inputText) {
             customisedText = placeholderText;
         } else {
             customisedText = inputText;
         }
+
         if (isReverseText) {
             customisedText = utils.reverseText(customisedText);
         }
@@ -68,6 +76,12 @@ export default function Home() {
         if (selectedSeparator && isSeparateCharacters) {
             customisedText = utils.separateCharacters(customisedText, selectedSeparator);
         }
+        if (selectedPrefix) {
+            customisedText = utils.addPrefix(customisedText, selectedPrefix);
+        }
+        if (selectedSuffix) {
+            customisedText = utils.addSuffix(customisedText, selectedSuffix);
+        }
         setCustomisedFont(customisedText);
     }, [
         inputText,
@@ -83,7 +97,9 @@ export default function Home() {
         isURLFriendly,
         selectedSeparator,
         isSeparateWords,
-        isSeparateCharacters
+        isSeparateCharacters,
+        selectedPrefix,
+        selectedSuffix
     ])
 
     function handleInputText(event) {
@@ -231,6 +247,14 @@ export default function Home() {
         setIsSeparateWords(false);
     }
 
+    function handleSelectPrefix(event) {
+        setSelectedPrefix(event.target.value);
+    }
+
+    function handleSelectSuffix(event) {
+        setSelectedSuffix(event.target.value);
+    }
+
     return (
         <div>
             <Helmet>
@@ -249,6 +273,7 @@ export default function Home() {
                 <section>
                     <form>
                         <label htmlFor="input-text">Input your text:</label>
+
                         <textarea
                             id="input-text"
                             name="input-text"
@@ -256,6 +281,7 @@ export default function Home() {
                             onChange={handleInputText}
                             placeholder={placeholderText}
                         ></textarea>
+
                         <div>
                             <button
                                 type="button"
@@ -265,8 +291,8 @@ export default function Home() {
 
                         <fieldset>
                             <legend>Separators</legend>
-
                             <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedSeparatorLabel}
                                 selectedSeparatorAndWrapper={selectedSeparator}
                                 handleSelectSeparatorAndWrapper={handleSelectSeparator}
                             />
@@ -292,6 +318,20 @@ export default function Home() {
                                 />
                                 <label htmlFor="separate-characters-checkbox">Characters</label>
                             </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Prefix / Suffix</legend>
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedPrefixLabel}
+                                selectedSeparatorAndWrapper={selectedPrefix}
+                                handleSelectSeparatorAndWrapper={handleSelectPrefix}
+                            />
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedSuffixLabel}
+                                selectedSeparatorAndWrapper={selectedSuffix}
+                                handleSelectSeparatorAndWrapper={handleSelectSuffix}
+                            />
                         </fieldset>
 
                         <fieldset>

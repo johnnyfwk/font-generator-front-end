@@ -1,11 +1,11 @@
 import { SeparatorsAndWrappersSigns } from "../content/SeparatorsAndWrappersSigns";
 
-export default function SeparatorsAndWrappers({ selectedSeparatorAndWrapper, handleSelectSeparatorAndWrapper }) {
+export default function SeparatorsAndWrappers({ selectedSeparatorAndWrapperLabel, selectedSeparatorAndWrapper, handleSelectSeparatorAndWrapper }) {
     return (
         <div id="separatorsAndWrappers">
-            <label htmlFor="separatorsAndWrappers"></label>
+            <label htmlFor="separatorsAndWrappers">{selectedSeparatorAndWrapperLabel}</label>
             <select name="separatorsAndWrappers" id="separatorsAndWrappers" value={selectedSeparatorAndWrapper} onChange={handleSelectSeparatorAndWrapper}>
-                <option value="" disabled>Select one</option>
+                <option value="">Options</option>
                 {SeparatorsAndWrappersSigns.map((sign, index) => {
                     return <option key={index} value={sign}>{sign}</option>
                 })}
