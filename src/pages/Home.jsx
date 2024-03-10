@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import { allFonts } from "../content/fonts";
+import * as utils from '../utils';
 
 export default function Home() {
     const placeholderText = "Enter your text to see it in different fonts";
@@ -31,7 +32,7 @@ export default function Home() {
                 textReversed = text;
             }
 
-            const convertedText = convertText(textReversed, font.characters);
+            const convertedText = utils.convertText(textReversed, font.characters, font.openingCharacterWrapper, font.closingCharacterWrapper, font.openingTextWrapper, font.closingTextWrapper);
             fontCopy.text = convertedText;            
             fontsToDisplay.push(fontCopy);
         })
@@ -40,22 +41,10 @@ export default function Home() {
 
     function handleInputText(event) {
         setInputText(event.target.value);
-        if (!event.target.value) {
-            setIsReverseTextCheckBoxChecked(false);
-        }
     }
 
     function handleClearTextButton() {
         setInputText("");
-        setIsReverseTextCheckBoxChecked(false);
-    }
-
-    function convertText(text, characters) {
-        let convertedText = "";
-        for (let character of text) {
-            convertedText += characters[character] || character;
-        }
-        return convertedText;
     }
 
     function copyToClipboard(buttonNumber, text) {
@@ -79,12 +68,12 @@ export default function Home() {
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://fontgenerator.co.uk/" />
                 <title>Font Generator • FontGenerator.co.uk</title>
-                <meta name="description" content="Copy and paste hundreds of fonts with our font generator." />
+                <meta name="description" content="Copy and paste fonts with our font generator." />
             </Helmet>
 
             <header>
                 <h1>Font Generator</h1>
-                <p>Copy and paste hundreds of fonts with our font generator.</p>
+                <p>Copy and paste fonts with our font generator.</p>
             </header>
 
             <main>
@@ -112,7 +101,6 @@ export default function Home() {
                             <label htmlFor="vehicle1">Reverse Text</label>
                         </div>
                         
-
                         <div>
                             <button
                                 type="button"
@@ -131,7 +119,6 @@ export default function Home() {
                                     <div>{font.name}</div>
 
                                     <div
-                                        style={{fontFamily: font.name}}
                                         className="font-text"
                                     >{font.text}</div>
 
