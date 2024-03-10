@@ -1,4 +1,4 @@
-import { SeparatorsAndWrappersSigns } from "../content/SeparatorsAndWrappersSigns";
+import { SeparatorsAndWrappersSigns } from "../content/separatorsAndWrappersSigns";
 
 export default function SeparatorsAndWrappers({ selectedSeparatorAndWrapperLabel, selectedSeparatorAndWrapper, handleSelectSeparatorAndWrapper }) {
     return (

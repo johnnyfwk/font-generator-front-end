@@ -28,8 +28,18 @@ export default function Home() {
 
     const selectedPrefixLabel = "Prefix:";
     const [ selectedPrefix, setSelectedPrefix ] = useState("");
+
     const selectedSuffixLabel = "Suffix:";
     const [ selectedSuffix, setSelectedSuffix ] = useState("");
+    
+    const selectedOpeningWrapperLabel = "Opening wrapper:";
+    const [ selectedOpeningWrapper, setSelectedOpeningWrapper ] = useState("");
+
+    const selectedClosingWrapperLabel = "Closing wrapper:";
+    const [ selectedClosingWrapper, setSelectedClosingWrapper ] = useState("");
+    
+    const [ isWordWrapper, setIsWordWrapper ] = useState(false);
+    const [ isCharacterWrapper, setIsCharacterWrapper ] = useState(false);
 
     useEffect(() => {
         let customisedText;
@@ -70,11 +80,23 @@ export default function Home() {
         if (isURLFriendly) {
             customisedText = utils.toURLFriendly(customisedText);
         }
+        if (selectedSeparator && isSeparateCharacters) {
+            customisedText = utils.separateCharacters(customisedText, selectedSeparator);
+        }
+        if (selectedOpeningWrapper && isWordWrapper) {
+            customisedText = utils.wordOpeningWrapper(customisedText, selectedOpeningWrapper);
+        }
+        if (selectedClosingWrapper && isWordWrapper) {
+            customisedText = utils.wordClosingWrapper(customisedText, selectedClosingWrapper);
+        }
         if (selectedSeparator && isSeparateWords) {
             customisedText = utils.separateWords(customisedText, selectedSeparator);
         }
-        if (selectedSeparator && isSeparateCharacters) {
-            customisedText = utils.separateCharacters(customisedText, selectedSeparator);
+        if (selectedOpeningWrapper && isCharacterWrapper) {
+            customisedText = utils.characterOpeningWrapper(customisedText, selectedOpeningWrapper);
+        }
+        if (selectedClosingWrapper && isCharacterWrapper) {
+            customisedText = utils.characterClosingWrapper(customisedText, selectedClosingWrapper);
         }
         if (selectedPrefix) {
             customisedText = utils.addPrefix(customisedText, selectedPrefix);
@@ -99,7 +121,11 @@ export default function Home() {
         isSeparateWords,
         isSeparateCharacters,
         selectedPrefix,
-        selectedSuffix
+        selectedSuffix,
+        selectedOpeningWrapper,
+        selectedClosingWrapper,
+        isWordWrapper,
+        isCharacterWrapper
     ])
 
     function handleInputText(event) {
@@ -255,6 +281,24 @@ export default function Home() {
         setSelectedSuffix(event.target.value);
     }
 
+    function handleSelectOpeningWrapper(event) {
+        setSelectedOpeningWrapper(event.target.value);
+    }
+
+    function handleWordWrapperCheckbox() {
+        setIsWordWrapper((currentWordWrapperValue) => !currentWordWrapperValue);
+        setIsCharacterWrapper(false);
+    }
+
+    function handleSelectClosingWrapper(event) {
+        setSelectedClosingWrapper(event.target.value);
+    }
+
+    function handleCharacterWrapperCheckbox() {
+        setIsCharacterWrapper((currentCharacterWrapperValue) => !currentCharacterWrapperValue);
+        setIsWordWrapper(false);
+    }
+
     return (
         <div>
             <Helmet>
@@ -270,6 +314,13 @@ export default function Home() {
             </header>
 
             <main>
+                <section>
+                    <div id="customised-font">{customisedFont}</div>
+                    <button
+                        onClick={() => copyCustomisedFontToClipboard(customisedFont)}
+                    >{customisedFontCopyButtonText}</button>
+                </section>
+
                 <section>
                     <form>
                         <label htmlFor="input-text">Input your text:</label>
@@ -288,6 +339,40 @@ export default function Home() {
                                 onClick={handleClearTextButton}
                             >Clear Text</button>
                         </div>
+
+                        <fieldset>
+                            <legend>Wrappers</legend>
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedOpeningWrapperLabel}
+                                selectedSeparatorAndWrapper={selectedOpeningWrapper}
+                                handleSelectSeparatorAndWrapper={handleSelectOpeningWrapper}
+                            />
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedClosingWrapperLabel}
+                                selectedSeparatorAndWrapper={selectedClosingWrapper}
+                                handleSelectSeparatorAndWrapper={handleSelectClosingWrapper}
+                            />
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="word-wrapper-checkbox"
+                                    name="word-wrapper-checkbox"
+                                    value="Word Wrapper Checkbox"
+                                    onChange={handleWordWrapperCheckbox}
+                                    checked={isWordWrapper}
+                                />
+                                <label htmlFor="word-wrapper-checkbox">Words</label>
+                                <input
+                                    type="checkbox"
+                                    id="character-wrapper-checkbox"
+                                    name="character-wrapper-checkbox"
+                                    value="character Wrapper Checkbox"
+                                    onChange={handleCharacterWrapperCheckbox}
+                                    checked={isCharacterWrapper}
+                                />
+                                <label htmlFor="character-wrapper-checkbox">Characters</label>
+                            </div>
+                        </fieldset>
 
                         <fieldset>
                             <legend>Separators</legend>
@@ -450,14 +535,6 @@ export default function Home() {
                             </div>
                         </fieldset>
                     </form>
-                </section>
-
-                <section>
-                    <h2>Customised Font</h2>
-                    <div id="customised-font">{customisedFont}</div>
-                    <button
-                        onClick={() => copyCustomisedFontToClipboard(customisedFont)}
-                    >{customisedFontCopyButtonText}</button>
                 </section>
             </main>
         </div>
