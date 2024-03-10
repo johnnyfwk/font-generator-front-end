@@ -1,19 +1,18 @@
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
-import { allFonts } from "../content/fonts";
 import * as utils from '../utils';
+import SeparatorsAndWrappers from "../components/SeparatorsAndWrappers";
 
 export default function Home() {
     const placeholderText = "Enter your text to see it in different fonts";
 
     const [ inputText, setInputText ] = useState("");
-    const [ fonts, setFonts ] = useState([]);
-    const [ copyButtonText, setCopyButtonText ] = useState("Copy");
-    const [ buttonNumberClicked, setButtonNumberClicked ] = useState(null);
+    const [ customisedFont, setCustomisedFont ] = useState(placeholderText);
+    const [ customisedFontCopyButtonText, setCustomisedFontCopyButtonText ] = useState("Copy");
 
+    const [ isReverseText, setIsReverseText ] = useState(false);
     const [ isUppercase, setIsUppercase ] = useState(false);
     const [ isLowercase, setIsLowercase ] = useState(false);
-    const [ isReverseText, setIsReverseText ] = useState(false);
     const [ isCapitalisation, setIsCapitalisation ] = useState(false);
     const [ isCapitalisationOdd, setIsCapitalisationOdd ] = useState(false);
     const [ isCapitalisationEven, setIsCapitalisationEven ] = useState(false);
@@ -22,73 +21,54 @@ export default function Home() {
     const [ isPascalCase, setIsPascalCase ] = useState(false);
     const [ isURLFriendly, setIsURLFriendly ] = useState(false);
 
+    const [ selectedSeparator, setSelectedSeparator ] = useState("");
+    const [ isSeparateWords, setIsSeparateWords ] = useState(false);
+    const [ isSeparateCharacters, setIsSeparateCharacters ] = useState(false);
+
     useEffect(() => {
-        const fontsToDisplay = [];
-        allFonts.forEach((font) => {
-            const fontCopy = {};
-            fontCopy.name = font.name;
-
-            let text;
-            if (!inputText) {
-                text = placeholderText;
-            } else {
-                text = inputText;
-            }
-
-            if (isUppercase) {
-                text = utils.toUppercase(text);
-            }
-
-            if (isLowercase) {
-                text = utils.toLowercase(text);
-            }
-
-            if (isReverseText) {
-                text = utils.reverseText(text);
-            }
-
-            if (isCapitalisation) {
-                text = utils.toCapitalisation(text);
-            }
-
-            if (isCapitalisationOdd) {
-                text = utils.toCapitalisationOdd(text);
-            }
-
-            if (isCapitalisationEven) {
-                text = utils.toCapitalisationEven(text);
-            }
-
-            if (isCapitalisationRandom) {
-                text = utils.toCapitalisationRandom(text);
-            }
-
-            if (isCamelCase) {
-                text = utils.toCamelCase(text);
-            }
-
-            if (isPascalCase) {
-                text = utils.toPascalCase(text);
-            }
-
-            if (isURLFriendly) {
-                text = utils.toURLFriendly(text);
-            }
-
-            const convertedText = utils.convertText(
-                text,
-                font.characters,
-                font.openingTextWrapper,
-                font.closingTextWrapper,
-                font.openingWordWrapper,
-                font.closingWordWrapper,
-                font.openingCharacterWrapper,
-                font.closingCharacterWrapper
-            );
-            fontCopy.text = convertedText;            
-            fontsToDisplay.push(fontCopy);
-        })
-        setFonts(fontsToDisplay);
+        let customisedText;
+        if (!inputText) {
+            customisedText = placeholderText;
+        } else {
+            customisedText = inputText;
+        }
+        if (isReverseText) {
+            customisedText = utils.reverseText(customisedText);
+        }
+        if (isUppercase) {
+            customisedText = utils.toUppercase(customisedText);
+        }
+        if (isLowercase) {
+            customisedText = utils.toLowercase(customisedText);
+        }
+        if (isCapitalisation) {
+            customisedText = utils.toCapitalisation(customisedText);
+        }
+        if (isCapitalisationOdd) {
+            customisedText = utils.toCapitalisationOdd(customisedText);
+        }
+        if (isCapitalisationEven) {
+            customisedText = utils.toCapitalisationEven(customisedText);
+        }
+        if (isCapitalisationRandom) {
+            customisedText = utils.toCapitalisationRandom(customisedText);
+        }
+        if (isCamelCase) {
+            customisedText = utils.toCamelCase(customisedText);
+        }
+        if (isPascalCase) {
+            customisedText = utils.toPascalCase(customisedText);
+        }
+        if (isURLFriendly) {
+            customisedText = utils.toURLFriendly(customisedText);
+        }
+        if (selectedSeparator && isSeparateWords) {
+            customisedText = utils.separateWords(customisedText, selectedSeparator);
+        }
+        if (selectedSeparator && isSeparateCharacters) {
+            customisedText = utils.separateCharacters(customisedText, selectedSeparator);
+        }
+        setCustomisedFont(customisedText);
     }, [
         inputText,
         isUppercase,
@@ -100,66 +80,155 @@ export default function Home() {
         isCapitalisationRandom,
         isCamelCase,
         isPascalCase,
-        isURLFriendly
+        isURLFriendly,
+        selectedSeparator,
+        isSeparateWords,
+        isSeparateCharacters
     ])
 
     function handleInputText(event) {
         setInputText(event.target.value);
+        if (event.target.value) {
+            setCustomisedFont(event.target.value);
+        } else {
+            setCustomisedFont(placeholderText);
+        }
     }
 
     function handleClearTextButton() {
         setInputText("");
     }
 
-    function copyToClipboard(buttonNumber, text) {
-        setButtonNumberClicked(buttonNumber);
+    function copyCustomisedFontToClipboard(text) {      
         navigator.clipboard.writeText(text);
-        setCopyButtonText("Copied");
-        setTimeout(() => setCopyButtonText("Copy"), 3000);
+        setCustomisedFontCopyButtonText("Copied");
+        setTimeout(() => setCustomisedFontCopyButtonText("Copy"), 3000);
     };
-
-    function handleUppercase() {
-        setIsUppercase((currentUppercaseValue) => !currentUppercaseValue);
-    }
-
-    function handleLowercase() {
-        setIsLowercase((currentLowercaseValue) => !currentLowercaseValue);
-    }
 
     function handleReverseText() {
         setIsReverseText((currentTextReversedValue) => !currentTextReversedValue);
     }
 
+    function handleUppercase() {
+        setIsUppercase((currentUppercaseValue) => !currentUppercaseValue);
+        setIsLowercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationEven(false);
+        setIsCapitalisationRandom(false);
+        setIsCamelCase(false);
+        setIsPascalCase(false);
+        setIsURLFriendly(false);
+    }
+
+    function handleLowercase() {
+        setIsLowercase((currentLowercaseValue) => !currentLowercaseValue);
+        setIsUppercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationEven(false);
+        setIsCapitalisationRandom(false);
+        setIsCamelCase(false);
+        setIsPascalCase(false);
+        setIsURLFriendly(false);
+    }
+
     function handleCapitalisation() {
         setIsCapitalisation((currentCapitalisationValue) => !currentCapitalisationValue);
+        setIsUppercase(false);
+        setIsLowercase(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationEven(false);
+        setIsCapitalisationRandom(false);
+        setIsCamelCase(false);
+        setIsPascalCase(false);
+        setIsURLFriendly(false);
     }
 
     function handleCapitalisationOdd() {
         setIsCapitalisationOdd((currentCapitalisationOddValue) => !currentCapitalisationOddValue);
+        setIsUppercase(false);
+        setIsLowercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationEven(false);
+        setIsCapitalisationRandom(false);
+        setIsCamelCase(false);
+        setIsPascalCase(false);
+        setIsURLFriendly(false);
     }
 
     function handleCapitalisationEven() {
         setIsCapitalisationEven((currentCapitalisationEvenValue) => !currentCapitalisationEvenValue);
+        setIsUppercase(false);
+        setIsLowercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationRandom(false);
+        setIsCamelCase(false);
+        setIsPascalCase(false);
+        setIsURLFriendly(false);
     }
 
     function handleCapitalisationRandom() {
         setIsCapitalisationRandom((currentCapitalisationRandomValue) => !currentCapitalisationRandomValue);
+        setIsUppercase(false);
+        setIsLowercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationEven(false);
+        setIsCamelCase(false);
+        setIsPascalCase(false);
+        setIsURLFriendly(false);
     }
 
     function handleCamelCase() {
         setIsCamelCase((currentCamelCaseValue) => !currentCamelCaseValue);
+        setIsUppercase(false);
+        setIsLowercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationEven(false);
+        setIsCapitalisationRandom(false);
+        setIsPascalCase(false);
+        setIsURLFriendly(false);
     }
 
     function handlePascalCase() {
         setIsPascalCase((currentPascalCaseValue) => !currentPascalCaseValue);
+        setIsUppercase(false);
+        setIsLowercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationEven(false);
+        setIsCapitalisationRandom(false);
+        setIsCamelCase(false);
+        setIsURLFriendly(false);
     }
 
     function handleURLFriendly() {
         setIsURLFriendly((currentURLFriendlyValue) => !currentURLFriendlyValue);
+        setIsUppercase(false);
+        setIsLowercase(false);
+        setIsCapitalisation(false);
+        setIsCapitalisationOdd(false);
+        setIsCapitalisationEven(false);
+        setIsCapitalisationRandom(false);
+        setIsCamelCase(false);
+        setIsPascalCase(false);
     }
 
-    if (!fonts) {
-        return null;
+    function handleSelectSeparator(event) {
+        setSelectedSeparator(event.target.value);
+    }
+
+    function handleSeparateWordsCheckbox() {
+        setIsSeparateWords((currentSeparateWordsValue) => !currentSeparateWordsValue);
+        setIsSeparateCharacters(false);
+    }
+
+    function handleSeparateCharactersCheckbox() {
+        setIsSeparateCharacters((currentSeparateCharactersValue) => !currentSeparateCharactersValue);
+        setIsSeparateWords(false);
     }
 
     return (
@@ -187,9 +256,46 @@ export default function Home() {
                             onChange={handleInputText}
                             placeholder={placeholderText}
                         ></textarea>
+                        <div>
+                            <button
+                                type="button"
+                                onClick={handleClearTextButton}
+                            >Clear Text</button>
+                        </div>
 
                         <fieldset>
-                            <legend>Options:</legend>
+                            <legend>Separators</legend>
+
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapper={selectedSeparator}
+                                handleSelectSeparatorAndWrapper={handleSelectSeparator}
+                            />
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="separate-words-checkbox"
+                                    name="separate-words-checkbox"
+                                    value="Separate Words Checkbox"
+                                    onChange={handleSeparateWordsCheckbox}
+                                    checked={isSeparateWords}
+                                />
+                                <label htmlFor="separate-words-checkbox">Words</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="separate-characters-checkbox"
+                                    name="separate-characters-checkbox"
+                                    value="Separate Characters Checkbox"
+                                    onChange={handleSeparateCharactersCheckbox}
+                                    checked={isSeparateCharacters}
+                                />
+                                <label htmlFor="separate-characters-checkbox">Characters</label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Options</legend>
                             <div id="font-options">
                                 <div>
                                     <input
@@ -210,16 +316,6 @@ export default function Home() {
                                         value="Uppercase"
                                         onChange={handleUppercase}
                                         checked={isUppercase}
-                                        disabled={
-                                            isLowercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationEven ||
-                                            isCapitalisationRandom ||
-                                            isCamelCase ||
-                                            isPascalCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="uppercase">Uppercase</label>
                                 </div>
@@ -231,16 +327,6 @@ export default function Home() {
                                         value="Lowercase"
                                         onChange={handleLowercase}
                                         checked={isLowercase}
-                                        disabled={
-                                            isUppercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationEven ||
-                                            isCapitalisationRandom ||
-                                            isCamelCase ||
-                                            isPascalCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="lowercase">Lowercase</label>
                                 </div>
@@ -252,16 +338,6 @@ export default function Home() {
                                         value="Capitalisation"
                                         onChange={handleCapitalisation}
                                         checked={isCapitalisation}
-                                        disabled={
-                                            isUppercase ||
-                                            isLowercase ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationEven ||
-                                            isCapitalisationRandom ||
-                                            isCamelCase ||
-                                            isPascalCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="capitalisation">Capitalisation</label>
                                 </div>
@@ -273,16 +349,6 @@ export default function Home() {
                                         value="Capitalisation Odd"
                                         onChange={handleCapitalisationOdd}
                                         checked={isCapitalisationOdd}
-                                        disabled={
-                                            isUppercase ||
-                                            isLowercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationEven ||
-                                            isCapitalisationRandom ||
-                                            isCamelCase ||
-                                            isPascalCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="capitalisation-odd">Capitalisation (Odd)</label>
                                 </div>
@@ -294,16 +360,6 @@ export default function Home() {
                                         value="Capitalisation Even"
                                         onChange={handleCapitalisationEven}
                                         checked={isCapitalisationEven}
-                                        disabled={
-                                            isUppercase ||
-                                            isLowercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationRandom ||
-                                            isCamelCase ||
-                                            isPascalCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="capitalisation-even">Capitalisation (Even)</label>
                                 </div>
@@ -315,16 +371,6 @@ export default function Home() {
                                         value="Capitalisation Random"
                                         onChange={handleCapitalisationRandom}
                                         checked={isCapitalisationRandom}
-                                        disabled={
-                                            isUppercase ||
-                                            isLowercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationEven ||
-                                            isCamelCase ||
-                                            isPascalCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="capitalisation-random">Capitalisation (Random)</label>
                                 </div>
@@ -336,16 +382,6 @@ export default function Home() {
                                         value="Camel Case"
                                         onChange={handleCamelCase}
                                         checked={isCamelCase}
-                                        disabled={
-                                            isUppercase ||
-                                            isLowercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationEven ||
-                                            isCapitalisationRandom ||
-                                            isPascalCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="camel-case">Camel Case</label>
                                 </div>
@@ -357,16 +393,6 @@ export default function Home() {
                                         value="pascal Case"
                                         onChange={handlePascalCase}
                                         checked={isPascalCase}
-                                        disabled={
-                                            isUppercase ||
-                                            isLowercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationEven ||
-                                            isCapitalisationRandom ||
-                                            isCamelCase ||
-                                            isURLFriendly
-                                        }
                                     />
                                     <label htmlFor="pascal-case">Pascal Case</label>
                                 </div>
@@ -378,50 +404,20 @@ export default function Home() {
                                         value="URL Friendly"
                                         onChange={handleURLFriendly}
                                         checked={isURLFriendly}
-                                        disabled={
-                                            isUppercase ||
-                                            isLowercase ||
-                                            isCapitalisation ||
-                                            isCapitalisationOdd ||
-                                            isCapitalisationEven ||
-                                            isCapitalisationRandom ||
-                                            isCamelCase ||
-                                            isPascalCase
-                                        }
                                     />
                                     <label htmlFor="url-friendly">URL Friendly</label>
                                 </div>
                             </div>
                         </fieldset>
-
-                        <div>
-                            <button
-                                type="button"
-                                onClick={handleClearTextButton}
-                            >Clear Text</button>
-                        </div>
                     </form>
                 </section>
-                
+
                 <section>
-                    <h2>Fonts</h2>
-                    <div id="output-fonts-wrapper">
-                        {fonts.map((font, index) => {
-                            return (
-                                <div key={index}>
-                                    <div>{font.name}</div>
-
-                                    <div
-                                        className="font-text"
-                                    >{font.text}</div>
-
-                                    <button
-                                        onClick={() => copyToClipboard(index, font.text)}
-                                    >{buttonNumberClicked === index ? copyButtonText : "Copy"}</button>
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <h2>Customised Font</h2>
+                    <div id="customised-font">{customisedFont}</div>
+                    <button
+                        onClick={() => copyCustomisedFontToClipboard(customisedFont)}
+                    >{customisedFontCopyButtonText}</button>
                 </section>
             </main>
         </div>

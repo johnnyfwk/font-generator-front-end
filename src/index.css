@@ -27,8 +27,11 @@ footer {
 }
 
 form {
-    display: grid;
-    gap: 10px;
+
+}
+
+textarea {
+    width: 100%;
 }
 
 button {
@@ -43,6 +46,10 @@ button {
 #output-fonts-wrapper {
     display: grid;
     gap: 20px;
+}
+
+.font-name {
+    font-weight: bold;
 }
 
 .font-text {
