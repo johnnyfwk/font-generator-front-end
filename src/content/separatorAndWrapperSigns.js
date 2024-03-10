@@ -1,4 +1,4 @@
-export const SeparatorsAndWrappersSigns = [
+export const separatorAndWrapperSigns = [
     "❤",
     "❥",
     "☺",
