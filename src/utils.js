@@ -22,6 +22,30 @@ export function addSuffix(text, suffix) {
     return text + " " + suffix;
 }
 
+export function wordOpeningWrapper(text, openingWrapper) {
+    const words = text.split(' ');
+    const wrappedWords = words.map(word => `${openingWrapper}${word}`);
+    const wrappedString = wrappedWords.join(' ');
+    return wrappedString;
+}
+
+export function wordClosingWrapper(text, closingWrapper) {
+    const words = text.split(' ');
+    const wrappedWords = words.map(word => `${word}${closingWrapper}`);
+    const wrappedString = wrappedWords.join(' ');
+    return wrappedString;
+}
+
+export function characterOpeningWrapper(text, openingWrapper) {
+    const modifiedString = text.replace(/(\w)/g, `${openingWrapper}$1`);
+    return modifiedString;
+}
+
+export function characterClosingWrapper(text, closingWrapper) {
+    const modifiedString = text.replace(/(\w)/g, `$1${closingWrapper}`);
+    return modifiedString;
+}
+
 export function toUppercase(text) {
     return text.toUpperCase();
 }
