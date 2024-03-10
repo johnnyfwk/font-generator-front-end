@@ -1,55 +1,71 @@
-export function convertText(
-    text,
-    characters,
-    openingTextWrapper,
-    closingTextWrapper,
-    openingWordWrapper,
-    closingWordWrapper,
-    openingCharacterWrapper,
-    closingCharacterWrapper
-) {
-    let convertedText = text;
+// export function convertText(
+//     text,
+//     characters,
+//     openingTextWrapper,
+//     closingTextWrapper,
+//     openingWordWrapper,
+//     closingWordWrapper,
+//     openingCharacterWrapper,
+//     closingCharacterWrapper
+// ) {
+//     let convertedText = text;
 
-    if (characters) {
-        let newText = "";
-        for (let character of convertedText) {
-            newText += characters[character] || character;
-        }
-        convertedText = newText;
+//     if (characters) {
+//         let newText = "";
+//         for (let character of convertedText) {
+//             newText += characters[character] || character;
+//         }
+//         convertedText = newText;
+//     }
+
+//     if (openingCharacterWrapper && closingCharacterWrapper) {
+//         let wrapperText = "";
+//         for (let character of convertedText) {
+//             let wrapperCharacter = "";
+//             if (character !== " ") {
+//                 wrapperCharacter += openingCharacterWrapper + character + closingCharacterWrapper;
+//             } else {
+//                 wrapperCharacter += character;
+//             }
+//             wrapperText += wrapperCharacter;
+//         }
+//         convertedText = wrapperText;
+//     }
+
+//     if (openingWordWrapper && closingWordWrapper) {
+//         const words = convertedText.split(' ');
+//         let arrayOfWords = [];
+//         for (let word of words) {
+//             arrayOfWords.push(openingWordWrapper + word + closingWordWrapper)
+//         }
+//         convertedText = arrayOfWords.join(" ")
+//     }
+
+//     if (openingTextWrapper) {
+//         convertedText = openingTextWrapper + convertedText;
+//     }
+
+//     if (closingTextWrapper) {
+//         convertedText = convertedText + closingTextWrapper;
+//     }
+
+//     return convertedText;
+// }
+
+export function separateWords(text, separator) {
+    const words = text.split(' ');  
+    const separatedString = words.join(" " + separator + " ");  
+    return separatedString;
+}
+
+export function separateCharacters(text, separator) {
+    const words = text.split(' ');
+    const arrayOfWords = [];
+    for (let word of words) {
+        arrayOfWords.push(word.split("").join(separator));
     }
-
-    if (openingCharacterWrapper && closingCharacterWrapper) {
-        let wrapperText = "";
-        for (let character of convertedText) {
-            let wrapperCharacter = "";
-            if (character !== " ") {
-                wrapperCharacter += openingCharacterWrapper + character + closingCharacterWrapper;
-            } else {
-                wrapperCharacter += character;
-            }
-            wrapperText += wrapperCharacter;
-        }
-        convertedText = wrapperText;
-    }
-
-    if (openingWordWrapper && closingWordWrapper) {
-        const words = convertedText.split(' ');
-        let arrayOfWords = [];
-        for (let word of words) {
-            arrayOfWords.push(openingWordWrapper + word + closingWordWrapper)
-        }
-        convertedText = arrayOfWords.join(" ")
-    }
-
-    if (openingTextWrapper) {
-        convertedText = openingTextWrapper + convertedText;
-    }
-
-    if (closingTextWrapper) {
-        convertedText = convertedText + closingTextWrapper;
-    }
-
-    return convertedText;
+    const result = arrayOfWords.join(" ");
+    return result;
 }
 
 export function toUppercase(text) {
@@ -105,29 +121,24 @@ export function toCapitalisationEven(text) {
 }
 
 export function toCapitalisationRandom(text) {
-    if (text.length >= 2) {
-        let numberOfCharactersToCapitalise = 0;
-        while (numberOfCharactersToCapitalise === 0) {
-            numberOfCharactersToCapitalise = Math.floor(Math.random() * text.length);
+    const textCopy = text.toLowerCase();
+    const indicesToCapitalise = [];
+  
+    let numberOfCharactersToCapitalise = Math.floor(Math.random() * textCopy.length) + 1;
+    for (let i = 0; i < numberOfCharactersToCapitalise; i++) {
+        const randomIndex = Math.floor(Math.random() * textCopy.length);
+        if (!indicesToCapitalise.includes(randomIndex)) {
+            indicesToCapitalise.push(randomIndex);
         }
-        const indicesToCapitalise = [];
-        while (indicesToCapitalise.length < numberOfCharactersToCapitalise) {
-            const randomIndex = Math.floor(Math.random() * text.length);
-            if (!indicesToCapitalise.includes(randomIndex)) {
-                indicesToCapitalise.push(randomIndex);
-            }
-        }
-    
-        let result = '';
-        for (let i = 0; i < text.length; i++) {
-            if (indicesToCapitalise.includes(i)) {
-            result += text[i].toUpperCase();
-            } else {
-            result += text[i];
-            }
-        }
-        return result;
-    } else {
-        return text;
     }
+
+    let result = '';
+    for (let i = 0; i < textCopy.length; i++) {
+        if (indicesToCapitalise.includes(i)) {
+            result += textCopy[i].toUpperCase();
+        } else {
+            result += textCopy[i];
+        }
+    }
+    return result;
 }
