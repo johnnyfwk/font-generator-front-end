@@ -47,7 +47,7 @@ export function removeNonAlphanumericAndSpaces(text) {
 
 export function separateWords(text, separator) {
     const words = text.split(' ');  
-    const separatedString = words.join(separator);  
+    const separatedString = words.join(" " + separator + " ");  
     return separatedString;
 }
 
@@ -62,11 +62,11 @@ export function separateCharacters(text, separator) {
 }
 
 export function addPrefix(text, prefix) {
-    return prefix + text;
+    return prefix + " " + text;
 }
 
 export function addSuffix(text, suffix) {
-    return text + suffix;
+    return text + " " + suffix;
 }
 
 export function wordOpeningWrapper(text, openingWrapper) {
