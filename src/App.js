@@ -1,17 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import Nav from "./components/Nav";
+import Logo from "./components/Logo";
 import Home from "./pages/Home";
-import About from "./pages/About";
 import Footer from "./components/Footer";
+import TermsAndConditions from "./pages/TermsAndConditions";
 import Error404 from "./pages/Error404";
 
 function App() {
     return (
         <div className="App">
-            <Nav />
+            <Logo />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
+                <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                 <Route path="*" element={<Error404 />} />
             </Routes>
             <Footer />

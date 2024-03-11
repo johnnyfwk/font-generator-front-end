@@ -327,13 +327,13 @@ export default function Home() {
             <Helmet>
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://fontgenerator.co.uk/" />
-                <title>Font Generator • FontGenerator.co.uk</title>
-                <meta name="description" content="Copy and paste fonts with our font generator." />
+                <title>Font Generator: Create Customised Copy & Paste Fonts | FontGenerator.co.uk</title>
+                <meta name="description" content="Transform your words with various font styles, casing options, and formatting features. Perfect for social media, websites, and more." />
             </Helmet>
 
             <header>
-                <h1>Font Generator</h1>
-                <p>Copy and paste fonts with our font generator.</p>
+                <h1>Font Generator: Create Customised Fonts for Your Text</h1>
+                <p>Transform your text into unique fonts with our font generator. Our intuitive tool allows you to customise your text in various ways to suit your needs, whether its creating social media posts or writing eye-catching headlines.</p>
             </header>
 
             <main>
@@ -584,6 +584,17 @@ export default function Home() {
                             </div>
                         )
                     })}
+                </section>
+
+                <section>
+                    <h2>Key features:</h2>
+                    <ul>
+                        <li><strong>Text Transformation</strong>: Easily reverse, uppercase, lowercase, or capitalise your text with just a click. Experiment with different styles to find the perfect fit for your message.</li>
+                        <li><strong>Advanced Formatting</strong>: Take your text customisation further with options like capitalisation odd/even, random capitalisation, camel case, and pascal case. Let your creativity shine with endless possibilities.</li>
+                        <li><strong>Separators and Wrappers</strong>: Customise your text layout by adding separators between words or characters. Wrap your text with prefixes or suffixes to add a personal touch.</li>
+                        <li><strong>URL Friendly</strong>: Ensure your text is URL-friendly with our built-in feature. Make sharing links hassle-free and enhance your online presence.</li>                        
+                        <li><strong>Copy to Clipboard</strong>: Once you've created your perfect font, simply copy it to your clipboard with the click of a button. No more hassle, just seamless integration with your favourite platforms.</li>
+                    </ul>
                 </section>
             </main>
         </div>
