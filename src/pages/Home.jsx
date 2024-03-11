@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import * as utils from '../utils';
 import SeparatorsAndWrappers from "../components/SeparatorsAndWrappers";
-import { allFonts } from "../content/fonts";
+import { allFonts } from "../assets/content/fonts";
 
 export default function Home() {
     const placeholderText = "Enter your text to see it in different fonts";
@@ -22,7 +22,7 @@ export default function Home() {
     const [ isPascalCase, setIsPascalCase ] = useState(false);
     const [ isURLFriendly, setIsURLFriendly ] = useState(false);
 
-    const selectedSeparatorLabel = "";
+    const selectedSeparatorLabel = "Separator:";
     const [ selectedSeparator, setSelectedSeparator ] = useState("");
     const [ isSeparateWords, setIsSeparateWords ] = useState(false);
     const [ isSeparateCharacters, setIsSeparateCharacters ] = useState(false);
@@ -331,263 +331,279 @@ export default function Home() {
                 <meta name="description" content="Transform your words with various font styles, casing options, and formatting features. Perfect for social media, websites, and more." />
             </Helmet>
 
-            <header>
-                <h1>Font Generator: Create Customised Fonts for Your Text</h1>
-                <p>Transform your text into unique fonts with our font generator. Our intuitive tool allows you to customise your text in various ways to suit your needs, whether its creating social media posts or writing eye-catching headlines.</p>
-            </header>
-
+            <div className="header-wrapper">
+                <header>
+                    <h1>Font Generator: Create Customised Copy & Paste Fonts</h1>
+                    <p>Transform your text into unique fonts with our font generator. Our intuitive tool allows you to customise your text in various ways to suit your needs, whether its creating social media posts or writing eye-catching headlines.</p>
+                </header>
+            </div>
+            
             <main>
                 <section>
                     <form>
-                        <label htmlFor="input-text">Input your text:</label>
-
-                        <textarea
-                            id="input-text"
-                            name="input-text"
-                            value={inputText}
-                            onChange={handleInputText}
-                            placeholder={placeholderText}
-                        ></textarea>
-
                         <div>
-                            <button
-                                type="button"
-                                onClick={handleClearTextButton}
-                            >Clear Text</button>
+                            <textarea
+                                id="input-text"
+                                name="input-text"
+                                value={inputText}
+                                onChange={handleInputText}
+                                placeholder={placeholderText}
+                            ></textarea>
+
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={handleClearTextButton}
+                                >Clear Text</button>
+                            </div>
                         </div>
-
-                        <div>
-                            <button
-                                type="button"
-                                onClick={handleResetOptionsButton}
-                            >Reset Options</button>
-                        </div>
-
-                        <fieldset>
-                            <legend>Options</legend>
-                            <div id="font-options">
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="reverse-text"
-                                        name="reverse-text"
-                                        value="Reverse Text"
-                                        onChange={handleReverseText}
-                                        checked={isReverseText}
-                                    />
-                                    <label htmlFor="reverse-text">Reverse Text</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="uppercase"
-                                        name="uppercase"
-                                        value="Uppercase"
-                                        onChange={handleUppercase}
-                                        checked={isUppercase}
-                                    />
-                                    <label htmlFor="uppercase">Uppercase</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="lowercase"
-                                        name="lowercase"
-                                        value="Lowercase"
-                                        onChange={handleLowercase}
-                                        checked={isLowercase}
-                                    />
-                                    <label htmlFor="lowercase">Lowercase</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="capitalisation"
-                                        name="capitalisation"
-                                        value="Capitalisation"
-                                        onChange={handleCapitalisation}
-                                        checked={isCapitalisation}
-                                    />
-                                    <label htmlFor="capitalisation">Capitalisation</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="capitalisation-odd"
-                                        name="capitalisation-odd"
-                                        value="Capitalisation Odd"
-                                        onChange={handleCapitalisationOdd}
-                                        checked={isCapitalisationOdd}
-                                    />
-                                    <label htmlFor="capitalisation-odd">Capitalisation (Odd)</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="capitalisation-even"
-                                        name="capitalisation-even"
-                                        value="Capitalisation Even"
-                                        onChange={handleCapitalisationEven}
-                                        checked={isCapitalisationEven}
-                                    />
-                                    <label htmlFor="capitalisation-even">Capitalisation (Even)</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="capitalisation-random"
-                                        name="capitalisation-random"
-                                        value="Capitalisation Random"
-                                        onChange={handleCapitalisationRandom}
-                                        checked={isCapitalisationRandom}
-                                    />
-                                    <label htmlFor="capitalisation-random">Capitalisation (Random)</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="camel-case"
-                                        name="camel-case"
-                                        value="Camel Case"
-                                        onChange={handleCamelCase}
-                                        checked={isCamelCase}
-                                    />
-                                    <label htmlFor="camel-case">Camel Case</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="pascal-case"
-                                        name="pascal-case"
-                                        value="pascal Case"
-                                        onChange={handlePascalCase}
-                                        checked={isPascalCase}
-                                    />
-                                    <label htmlFor="pascal-case">Pascal Case</label>
-                                </div>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        id="url-friendly"
-                                        name="url-friendly"
-                                        value="URL Friendly"
-                                        onChange={handleURLFriendly}
-                                        checked={isURLFriendly}
-                                    />
-                                    <label htmlFor="url-friendly">URL Friendly</label>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Wrappers</legend>
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedOpeningWrapperLabel}
-                                selectedSeparatorAndWrapper={selectedOpeningWrapper}
-                                handleSelectSeparatorAndWrapper={handleSelectOpeningWrapper}
-                            />
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedClosingWrapperLabel}
-                                selectedSeparatorAndWrapper={selectedClosingWrapper}
-                                handleSelectSeparatorAndWrapper={handleSelectClosingWrapper}
-                            />
-                            <div>
-                                <input
-                                    type="checkbox"
-                                    id="word-wrapper-checkbox"
-                                    name="word-wrapper-checkbox"
-                                    value="Word Wrapper Checkbox"
-                                    onChange={handleWordWrapperCheckbox}
-                                    checked={isWordWrapper}
-                                />
-                                <label htmlFor="word-wrapper-checkbox">Words</label>
-                                <input
-                                    type="checkbox"
-                                    id="character-wrapper-checkbox"
-                                    name="character-wrapper-checkbox"
-                                    value="character Wrapper Checkbox"
-                                    onChange={handleCharacterWrapperCheckbox}
-                                    checked={isCharacterWrapper}
-                                />
-                                <label htmlFor="character-wrapper-checkbox">Characters</label>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Separators</legend>
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedSeparatorLabel}
-                                selectedSeparatorAndWrapper={selectedSeparator}
-                                handleSelectSeparatorAndWrapper={handleSelectSeparator}
-                            />
-                            <div>
-                                <input
-                                    type="checkbox"
-                                    id="separate-words-checkbox"
-                                    name="separate-words-checkbox"
-                                    value="Separate Words Checkbox"
-                                    onChange={handleSeparateWordsCheckbox}
-                                    checked={isSeparateWords}
-                                />
-                                <label htmlFor="separate-words-checkbox">Words</label>
-                            </div>
-                            <div>
-                                <input
-                                    type="checkbox"
-                                    id="separate-characters-checkbox"
-                                    name="separate-characters-checkbox"
-                                    value="Separate Characters Checkbox"
-                                    onChange={handleSeparateCharactersCheckbox}
-                                    checked={isSeparateCharacters}
-                                />
-                                <label htmlFor="separate-characters-checkbox">Characters</label>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Prefix / Suffix</legend>
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedPrefixLabel}
-                                selectedSeparatorAndWrapper={selectedPrefix}
-                                handleSelectSeparatorAndWrapper={handleSelectPrefix}
-                            />
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedSuffixLabel}
-                                selectedSeparatorAndWrapper={selectedSuffix}
-                                handleSelectSeparatorAndWrapper={handleSelectSuffix}
-                            />
-                        </fieldset>
                     </form>
                 </section>
 
-                <section id="font-outputs-wrapper">
-                    {allFonts.map((font, index) => {
-                        return (
-                            <div key={index}>
-                                <div className="font-output-name">{font.name}</div>
-                                {font.characters
-                                    ? <div>                                        
-                                        <div className="font-output-text">{utils.convertText(outputText, font.name, font.characters)}</div>
-                                        <button
-                                            type="button"
-                                            onClick={() => copyFontToClipboard(utils.convertText(outputText, font.name, font.characters), index)}
-                                        >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
-                                    </div>
-                                    : <div>
-                                        <div className="font-output-text" style={{ fontFamily: font.name}}>{outputText}</div>
-                                        <button
-                                            type="button"
-                                            onClick={() => copyFontToClipboard(outputText, index)}
-                                        >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
-                                    </div>
-                                }
-                            </div>
-                        )
-                    })}
-                </section>
 
-                <section>
-                    <h2>Key features:</h2>
+                <div id="form-filters-and-font-outputs-wrapper">
+                    <section id="font-outputs-wrapper">
+                        {allFonts.map((font, index) => {
+                            return (
+                                <div key={index} className="font-output-wrapper">
+                                    <div className="font-output-name">{font.name}</div>
+                                    {font.characters
+                                        ? <div className="font-output-text-and-button-wrapper">                                        
+                                            <div className="font-output-text">{utils.convertText(outputText, font.name, font.characters)}</div>
+                                            <button
+                                                type="button"
+                                                onClick={() => copyFontToClipboard(utils.convertText(outputText, font.name, font.characters), index)}
+                                            >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
+                                        </div>
+                                        : <div className="font-output-text-and-button-wrapper">
+                                            <div className="font-output-text" style={{ fontFamily: font.name}}>{outputText}</div>
+                                            <button
+                                                type="button"
+                                                onClick={() => copyFontToClipboard(outputText, index)}
+                                            >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
+                                        </div>
+                                    }
+                                </div>
+                            )
+                        })}
+                    </section>
+
+                    <section>
+                        <form id="form-filters">
+                            <div className="filter">
+                                <h3>Options</h3>
+                                <div id="font-options">
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="reverse-text"
+                                            name="reverse-text"
+                                            value="Reverse Text"
+                                            onChange={handleReverseText}
+                                            checked={isReverseText}
+                                        />
+                                        <label htmlFor="reverse-text">Reverse Text</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="uppercase"
+                                            name="uppercase"
+                                            value="Uppercase"
+                                            onChange={handleUppercase}
+                                            checked={isUppercase}
+                                        />
+                                        <label htmlFor="uppercase">Uppercase</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="lowercase"
+                                            name="lowercase"
+                                            value="Lowercase"
+                                            onChange={handleLowercase}
+                                            checked={isLowercase}
+                                        />
+                                        <label htmlFor="lowercase">Lowercase</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="capitalisation"
+                                            name="capitalisation"
+                                            value="Capitalisation"
+                                            onChange={handleCapitalisation}
+                                            checked={isCapitalisation}
+                                        />
+                                        <label htmlFor="capitalisation">Capitalisation</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="capitalisation-odd"
+                                            name="capitalisation-odd"
+                                            value="Capitalisation Odd"
+                                            onChange={handleCapitalisationOdd}
+                                            checked={isCapitalisationOdd}
+                                        />
+                                        <label htmlFor="capitalisation-odd">Capitalisation (Odd)</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="capitalisation-even"
+                                            name="capitalisation-even"
+                                            value="Capitalisation Even"
+                                            onChange={handleCapitalisationEven}
+                                            checked={isCapitalisationEven}
+                                        />
+                                        <label htmlFor="capitalisation-even">Capitalisation (Even)</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="capitalisation-random"
+                                            name="capitalisation-random"
+                                            value="Capitalisation Random"
+                                            onChange={handleCapitalisationRandom}
+                                            checked={isCapitalisationRandom}
+                                        />
+                                        <label htmlFor="capitalisation-random">Capitalisation (Random)</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="camel-case"
+                                            name="camel-case"
+                                            value="Camel Case"
+                                            onChange={handleCamelCase}
+                                            checked={isCamelCase}
+                                        />
+                                        <label htmlFor="camel-case">Camel Case</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="pascal-case"
+                                            name="pascal-case"
+                                            value="pascal Case"
+                                            onChange={handlePascalCase}
+                                            checked={isPascalCase}
+                                        />
+                                        <label htmlFor="pascal-case">Pascal Case</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="url-friendly"
+                                            name="url-friendly"
+                                            value="URL Friendly"
+                                            onChange={handleURLFriendly}
+                                            checked={isURLFriendly}
+                                        />
+                                        <label htmlFor="url-friendly">URL Friendly</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="filter">
+                                <h3>Wrappers</h3>
+                                <div className="filter-wrappers-checkboxes-wrapper">
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="word-wrapper-checkbox"
+                                            name="word-wrapper-checkbox"
+                                            value="Word Wrapper Checkbox"
+                                            onChange={handleWordWrapperCheckbox}
+                                            checked={isWordWrapper}
+                                        />
+                                        <label htmlFor="word-wrapper-checkbox">Words</label>
+                                    </div>
+                                    <div className="checkbox-input-and-label-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id="character-wrapper-checkbox"
+                                            name="character-wrapper-checkbox"
+                                            value="character Wrapper Checkbox"
+                                            onChange={handleCharacterWrapperCheckbox}
+                                            checked={isCharacterWrapper}
+                                        />
+                                        <label htmlFor="character-wrapper-checkbox">Characters</label>
+                                    </div>
+                                </div>
+                                <div className="filter-wrappers-select-wrapper">
+                                    <SeparatorsAndWrappers
+                                        selectedSeparatorAndWrapperLabel={selectedOpeningWrapperLabel}
+                                        selectedSeparatorAndWrapper={selectedOpeningWrapper}
+                                        handleSelectSeparatorAndWrapper={handleSelectOpeningWrapper}
+                                    />
+                                    <SeparatorsAndWrappers
+                                        selectedSeparatorAndWrapperLabel={selectedClosingWrapperLabel}
+                                        selectedSeparatorAndWrapper={selectedClosingWrapper}
+                                        handleSelectSeparatorAndWrapper={handleSelectClosingWrapper}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="filter">
+                                <h3>Separators</h3>
+                                <div className="checkbox-input-and-label-wrapper">
+                                    <input
+                                        type="checkbox"
+                                        id="separate-words-checkbox"
+                                        name="separate-words-checkbox"
+                                        value="Separate Words Checkbox"
+                                        onChange={handleSeparateWordsCheckbox}
+                                        checked={isSeparateWords}
+                                    />
+                                    <label htmlFor="separate-words-checkbox">Words</label>
+                                </div>
+                                <div className="checkbox-input-and-label-wrapper">
+                                    <input
+                                        type="checkbox"
+                                        id="separate-characters-checkbox"
+                                        name="separate-characters-checkbox"
+                                        value="Separate Characters Checkbox"
+                                        onChange={handleSeparateCharactersCheckbox}
+                                        checked={isSeparateCharacters}
+                                    />
+                                    <label htmlFor="separate-characters-checkbox">Characters</label>
+                                </div>
+                                <SeparatorsAndWrappers
+                                    selectedSeparatorAndWrapperLabel={selectedSeparatorLabel}
+                                    selectedSeparatorAndWrapper={selectedSeparator}
+                                    handleSelectSeparatorAndWrapper={handleSelectSeparator}
+                                />
+                            </div>
+
+                            <div className="filter">
+                                <h3>Prefix / Suffix</h3>
+                                <SeparatorsAndWrappers
+                                    selectedSeparatorAndWrapperLabel={selectedPrefixLabel}
+                                    selectedSeparatorAndWrapper={selectedPrefix}
+                                    handleSelectSeparatorAndWrapper={handleSelectPrefix}
+                                />
+                                <SeparatorsAndWrappers
+                                    selectedSeparatorAndWrapperLabel={selectedSuffixLabel}
+                                    selectedSeparatorAndWrapper={selectedSuffix}
+                                    handleSelectSeparatorAndWrapper={handleSelectSuffix}
+                                />
+                            </div>
+
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={handleResetOptionsButton}
+                                >Reset Options</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+
+
+                <section className="copy">
+                    <h2>Key features</h2>
                     <ul>
                         <li><strong>Text Transformation</strong>: Easily reverse, uppercase, lowercase, or capitalise your text with just a click. Experiment with different styles to find the perfect fit for your message.</li>
                         <li><strong>Advanced Formatting</strong>: Take your text customisation further with options like capitalisation odd/even, random capitalisation, camel case, and pascal case. Let your creativity shine with endless possibilities.</li>

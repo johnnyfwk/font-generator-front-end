@@ -10,13 +10,15 @@ export default function TermsAndConditions() {
                 <meta name="description" content="The terms and conditions for FontGenerator.co.uk" />
             </Helmet>
 
-            <header>
-                <h1>Terms & Conditions</h1>
-                <p>These terms and conditions outline the rules and regulations for the use of the FontGenerator.co.uk website.</p>
-            </header>
-
+            <div className="header-wrapper">
+                <header>
+                    <h1>Terms & Conditions</h1>
+                    <p>These terms and conditions outline the rules and regulations for the use of the FontGenerator.co.uk website.</p>
+                </header>
+            </div>
+           
             <main>
-                <section>
+                <section className="copy">
                     <p>By accessing this website, we assume you accept these terms and conditions. Do not continue to use FontGenerator.co.uk if you do not agree to all of the terms and conditions stated on this page.</p>
 
                     <p>The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliant to the Company's terms and conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client's needs in respect of provision of the Company's stated services, in accordance with and subject to, prevailing law of United Kingdom. Any use of the above terminology or other words in the singular, plural, capitalisation and/or he/she or they, are taken as interchangeable and therefore as referring to same.</p>
