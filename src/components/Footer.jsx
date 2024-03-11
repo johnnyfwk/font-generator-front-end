@@ -6,7 +6,7 @@ export default function Footer() {
             <div id="footer-links-wrapper">
                 <div className="footer-links">
                     <Link to="/">Home</Link>
-                    <Link to="/about">About</Link>
+                    <Link to="/terms-and-conditions">Terms & Conditions</Link>
                 </div>
             </div>
             <div id="copyright">Copyright &copy; {new Date().getFullYear()} FontGenerator.co.uk. All Rights Reserved.</div>
