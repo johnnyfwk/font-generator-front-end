@@ -45,6 +45,11 @@ button {
     gap: 10px;
 }
 
+.font-output {
+    display: grid;
+    gap: 20px;
+}
+
 .font-output-text {
     word-break: break-all;
     font-size: 2rem;

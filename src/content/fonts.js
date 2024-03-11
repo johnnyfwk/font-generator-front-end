@@ -108,7 +108,7 @@ export const allFonts = [
 
 
     {
-        name: "xxxxxxxxxxxxxxxxxxxxx",
+        name: "Underline",
         characters: {
             "a": "a̲",
             "b": "b̲",
@@ -136,7 +136,6 @@ export const allFonts = [
             "x": "x̲",
             "y": "y̲",
             "z": "z̲",
-
             "A": "A̲",
             "B": "B̲",
             "C": "C̲",
@@ -278,6 +277,7 @@ export const allFonts = [
             "#": "#̶",
             "£": "£̶",
             "$": "$̶",
+            "&": "&̶",
             "%": "%̶",
             "(": "(̶",
             ")": ")̶",
@@ -297,7 +297,12 @@ export const allFonts = [
             "`": "`̶",
             "{": "{̶",
             "}": "}̶",
-            "~": "~̶",   
+            "|": "|̶",
+            "~": "~̶",
+            "<": "<̶",
+            ">": ">̶",
+            ",": ",̶",
+            ".": ".̶"
         }
     },
     {
@@ -598,7 +603,7 @@ export const allFonts = [
         }
     },
     {
-        name: "Upside Down",
+        name: "Mirrored Upside Down",
         characters: {
             "a": "ɐ",
             "b": "q",
