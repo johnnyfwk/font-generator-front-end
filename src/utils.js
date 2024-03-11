@@ -2,27 +2,9 @@ export function convertText(text, fontName, fontCharacters) {
     const textCopy = text;
 
     if (fontName === "Morse Code") {
-        let sentence = "";
-        const words = removeNonAlphanumericAndSpaces(textCopy).split(" ");
-        for (let word of words) {
-            let convertedWord = "";
-            for (let character of word) {
-                convertedWord += fontCharacters[character] + " " || null;
-            }
-            sentence += convertedWord.trim() + "   ";
-        }
-        return sentence.trim();
+        return convertTextToMorseCode(textCopy, fontCharacters);
     } else if (fontName === "Braille") {
-        let sentence = "";
-        const words = removeNonAlphanumericAndSpaces(textCopy).split(" ");
-        for (let word of words) {
-            let convertedWord = "";
-            for (let character of word) {
-                convertedWord += fontCharacters[character] + " " || null;
-            }
-            sentence += convertedWord.trim() + "  ";
-        }
-        return sentence.trim();
+        return convertTextToBraille(textCopy, fontCharacters);
     } else {
         let convertedText = "";
         for (let character of text) {
@@ -30,6 +12,31 @@ export function convertText(text, fontName, fontCharacters) {
         }
         return convertedText;
     }
+}
+
+export function convertTextToBraille(text, characters) {
+    let brailleString = '';
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i].toLowerCase();
+        if (characters.hasOwnProperty(char)) {
+            brailleString += characters[char];
+            if (char === ' ') {
+                brailleString += ' ';
+            }
+        }
+    }
+    return brailleString;
+}
+
+export function convertTextToMorseCode(text, characters) {
+    let morseCodeString = '';
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i].toLowerCase();
+        if (characters.hasOwnProperty(char)) {
+            morseCodeString += characters[char] + ' ';
+        }
+    }
+    return morseCodeString.trim();
 }
 
 export function removeNonAlphanumericAndSpaces(text) {
