@@ -2,13 +2,14 @@ import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
 import * as utils from '../utils';
 import SeparatorsAndWrappers from "../components/SeparatorsAndWrappers";
+import { allFonts } from "../content/fonts";
 
 export default function Home() {
     const placeholderText = "Enter your text to see it in different fonts";
 
     const [ inputText, setInputText ] = useState("");
-    const [ customisedFont, setCustomisedFont ] = useState(placeholderText);
-    const [ customisedFontCopyButtonText, setCustomisedFontCopyButtonText ] = useState("Copy");
+    const [ outputText, setOutputText ] = useState(placeholderText);
+    const [ selectCopyButtonIndex, setSelectCopyButtonIndex ] = useState(null);
 
     const [ isReverseText, setIsReverseText ] = useState(false);
     const [ isUppercase, setIsUppercase ] = useState(false);
@@ -42,69 +43,69 @@ export default function Home() {
     const [ isCharacterWrapper, setIsCharacterWrapper ] = useState(false);
 
     useEffect(() => {
-        let customisedText;
+        let text;
 
         if (!inputText) {
-            customisedText = placeholderText;
+            text = placeholderText;
         } else {
-            customisedText = inputText;
+            text = inputText;
         }
 
         if (isReverseText) {
-            customisedText = utils.reverseText(customisedText);
+            text = utils.reverseText(text);
         }
         if (isUppercase) {
-            customisedText = utils.toUppercase(customisedText);
+            text = utils.toUppercase(text);
         }
         if (isLowercase) {
-            customisedText = utils.toLowercase(customisedText);
+            text = utils.toLowercase(text);
         }
         if (isCapitalisation) {
-            customisedText = utils.toCapitalisation(customisedText);
+            text = utils.toCapitalisation(text);
         }
         if (isCapitalisationOdd) {
-            customisedText = utils.toCapitalisationOdd(customisedText);
+            text = utils.toCapitalisationOdd(text);
         }
         if (isCapitalisationEven) {
-            customisedText = utils.toCapitalisationEven(customisedText);
+            text = utils.toCapitalisationEven(text);
         }
         if (isCapitalisationRandom) {
-            customisedText = utils.toCapitalisationRandom(customisedText);
+            text = utils.toCapitalisationRandom(text);
         }
         if (isCamelCase) {
-            customisedText = utils.toCamelCase(customisedText);
+            text = utils.toCamelCase(text);
         }
         if (isPascalCase) {
-            customisedText = utils.toPascalCase(customisedText);
+            text = utils.toPascalCase(text);
         }
         if (isURLFriendly) {
-            customisedText = utils.toURLFriendly(customisedText);
+            text = utils.toURLFriendly(text);
         }
         if (selectedSeparator && isSeparateCharacters) {
-            customisedText = utils.separateCharacters(customisedText, selectedSeparator);
+            text = utils.separateCharacters(text, selectedSeparator);
         }
         if (selectedOpeningWrapper && isWordWrapper) {
-            customisedText = utils.wordOpeningWrapper(customisedText, selectedOpeningWrapper);
+            text = utils.wordOpeningWrapper(text, selectedOpeningWrapper);
         }
         if (selectedClosingWrapper && isWordWrapper) {
-            customisedText = utils.wordClosingWrapper(customisedText, selectedClosingWrapper);
+            text = utils.wordClosingWrapper(text, selectedClosingWrapper);
         }
         if (selectedSeparator && isSeparateWords) {
-            customisedText = utils.separateWords(customisedText, selectedSeparator);
+            text = utils.separateWords(text, selectedSeparator);
         }
         if (selectedOpeningWrapper && isCharacterWrapper) {
-            customisedText = utils.characterOpeningWrapper(customisedText, selectedOpeningWrapper);
+            text = utils.characterOpeningWrapper(text, selectedOpeningWrapper);
         }
         if (selectedClosingWrapper && isCharacterWrapper) {
-            customisedText = utils.characterClosingWrapper(customisedText, selectedClosingWrapper);
+            text = utils.characterClosingWrapper(text, selectedClosingWrapper);
         }
         if (selectedPrefix) {
-            customisedText = utils.addPrefix(customisedText, selectedPrefix);
+            text = utils.addPrefix(text, selectedPrefix);
         }
         if (selectedSuffix) {
-            customisedText = utils.addSuffix(customisedText, selectedSuffix);
+            text = utils.addSuffix(text, selectedSuffix);
         }
-        setCustomisedFont(customisedText);
+        setOutputText(text);
     }, [
         inputText,
         isUppercase,
@@ -131,9 +132,9 @@ export default function Home() {
     function handleInputText(event) {
         setInputText(event.target.value);
         if (event.target.value) {
-            setCustomisedFont(event.target.value);
+            setOutputText(event.target.value);
         } else {
-            setCustomisedFont(placeholderText);
+            setOutputText(placeholderText);
         }
     }
 
@@ -141,10 +142,10 @@ export default function Home() {
         setInputText("");
     }
 
-    function copyCustomisedFontToClipboard(text) {      
+    function copyFontToClipboard(text, buttonIndex) {
+        setSelectCopyButtonIndex(buttonIndex)
         navigator.clipboard.writeText(text);
-        setCustomisedFontCopyButtonText("Copied");
-        setTimeout(() => setCustomisedFontCopyButtonText("Copy"), 3000);
+        setTimeout(() => setSelectCopyButtonIndex(null), 3000);
     };
 
     function handleReverseText() {
@@ -314,11 +315,28 @@ export default function Home() {
             </header>
 
             <main>
-                <section>
-                    <div id="customised-font">{customisedFont}</div>
-                    <button
-                        onClick={() => copyCustomisedFontToClipboard(customisedFont)}
-                    >{customisedFontCopyButtonText}</button>
+                <section id="font-outputs-wrapper">
+                    {allFonts.map((font, index) => {
+                        return (
+                            <div key={index}>
+                                <div className="font-output-name">{font.name}</div>
+                                {font.characters
+                                    ? <div>                                        
+                                        <div className="font-output-text">{utils.convertText(outputText, font.name, font.characters)}</div>
+                                        <button
+                                            onClick={() => copyFontToClipboard(utils.convertText(outputText, font.name, font.characters), index)}
+                                        >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
+                                    </div>
+                                    : <div>
+                                        <div className="font-output-text">{outputText}</div>
+                                        <button
+                                            onClick={() => copyFontToClipboard(outputText, index)}
+                                        >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
+                                    </div>
+                                }
+                            </div>
+                        )
+                    })}
                 </section>
 
                 <section>
@@ -339,85 +357,6 @@ export default function Home() {
                                 onClick={handleClearTextButton}
                             >Clear Text</button>
                         </div>
-
-                        <fieldset>
-                            <legend>Wrappers</legend>
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedOpeningWrapperLabel}
-                                selectedSeparatorAndWrapper={selectedOpeningWrapper}
-                                handleSelectSeparatorAndWrapper={handleSelectOpeningWrapper}
-                            />
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedClosingWrapperLabel}
-                                selectedSeparatorAndWrapper={selectedClosingWrapper}
-                                handleSelectSeparatorAndWrapper={handleSelectClosingWrapper}
-                            />
-                            <div>
-                                <input
-                                    type="checkbox"
-                                    id="word-wrapper-checkbox"
-                                    name="word-wrapper-checkbox"
-                                    value="Word Wrapper Checkbox"
-                                    onChange={handleWordWrapperCheckbox}
-                                    checked={isWordWrapper}
-                                />
-                                <label htmlFor="word-wrapper-checkbox">Words</label>
-                                <input
-                                    type="checkbox"
-                                    id="character-wrapper-checkbox"
-                                    name="character-wrapper-checkbox"
-                                    value="character Wrapper Checkbox"
-                                    onChange={handleCharacterWrapperCheckbox}
-                                    checked={isCharacterWrapper}
-                                />
-                                <label htmlFor="character-wrapper-checkbox">Characters</label>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Separators</legend>
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedSeparatorLabel}
-                                selectedSeparatorAndWrapper={selectedSeparator}
-                                handleSelectSeparatorAndWrapper={handleSelectSeparator}
-                            />
-                            <div>
-                                <input
-                                    type="checkbox"
-                                    id="separate-words-checkbox"
-                                    name="separate-words-checkbox"
-                                    value="Separate Words Checkbox"
-                                    onChange={handleSeparateWordsCheckbox}
-                                    checked={isSeparateWords}
-                                />
-                                <label htmlFor="separate-words-checkbox">Words</label>
-                            </div>
-                            <div>
-                                <input
-                                    type="checkbox"
-                                    id="separate-characters-checkbox"
-                                    name="separate-characters-checkbox"
-                                    value="Separate Characters Checkbox"
-                                    onChange={handleSeparateCharactersCheckbox}
-                                    checked={isSeparateCharacters}
-                                />
-                                <label htmlFor="separate-characters-checkbox">Characters</label>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Prefix / Suffix</legend>
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedPrefixLabel}
-                                selectedSeparatorAndWrapper={selectedPrefix}
-                                handleSelectSeparatorAndWrapper={handleSelectPrefix}
-                            />
-                            <SeparatorsAndWrappers
-                                selectedSeparatorAndWrapperLabel={selectedSuffixLabel}
-                                selectedSeparatorAndWrapper={selectedSuffix}
-                                handleSelectSeparatorAndWrapper={handleSelectSuffix}
-                            />
-                        </fieldset>
 
                         <fieldset>
                             <legend>Options</legend>
@@ -533,6 +472,85 @@ export default function Home() {
                                     <label htmlFor="url-friendly">URL Friendly</label>
                                 </div>
                             </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Wrappers</legend>
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedOpeningWrapperLabel}
+                                selectedSeparatorAndWrapper={selectedOpeningWrapper}
+                                handleSelectSeparatorAndWrapper={handleSelectOpeningWrapper}
+                            />
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedClosingWrapperLabel}
+                                selectedSeparatorAndWrapper={selectedClosingWrapper}
+                                handleSelectSeparatorAndWrapper={handleSelectClosingWrapper}
+                            />
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="word-wrapper-checkbox"
+                                    name="word-wrapper-checkbox"
+                                    value="Word Wrapper Checkbox"
+                                    onChange={handleWordWrapperCheckbox}
+                                    checked={isWordWrapper}
+                                />
+                                <label htmlFor="word-wrapper-checkbox">Words</label>
+                                <input
+                                    type="checkbox"
+                                    id="character-wrapper-checkbox"
+                                    name="character-wrapper-checkbox"
+                                    value="character Wrapper Checkbox"
+                                    onChange={handleCharacterWrapperCheckbox}
+                                    checked={isCharacterWrapper}
+                                />
+                                <label htmlFor="character-wrapper-checkbox">Characters</label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Separators</legend>
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedSeparatorLabel}
+                                selectedSeparatorAndWrapper={selectedSeparator}
+                                handleSelectSeparatorAndWrapper={handleSelectSeparator}
+                            />
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="separate-words-checkbox"
+                                    name="separate-words-checkbox"
+                                    value="Separate Words Checkbox"
+                                    onChange={handleSeparateWordsCheckbox}
+                                    checked={isSeparateWords}
+                                />
+                                <label htmlFor="separate-words-checkbox">Words</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="separate-characters-checkbox"
+                                    name="separate-characters-checkbox"
+                                    value="Separate Characters Checkbox"
+                                    onChange={handleSeparateCharactersCheckbox}
+                                    checked={isSeparateCharacters}
+                                />
+                                <label htmlFor="separate-characters-checkbox">Characters</label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Prefix / Suffix</legend>
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedPrefixLabel}
+                                selectedSeparatorAndWrapper={selectedPrefix}
+                                handleSelectSeparatorAndWrapper={handleSelectPrefix}
+                            />
+                            <SeparatorsAndWrappers
+                                selectedSeparatorAndWrapperLabel={selectedSuffixLabel}
+                                selectedSeparatorAndWrapper={selectedSuffix}
+                                handleSelectSeparatorAndWrapper={handleSelectSuffix}
+                            />
                         </fieldset>
                     </form>
                 </section>

@@ -45,7 +45,7 @@ button {
     gap: 10px;
 }
 
-#customised-font {
+.font-output-text {
     word-break: break-all;
     font-size: 1.5rem;
 }

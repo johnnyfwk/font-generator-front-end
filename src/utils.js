@@ -1,3 +1,43 @@
+export function convertText(text, fontName, fontCharacters) {
+    const textCopy = text;
+
+    if (fontName === "Morse Code") {
+        let sentence = "";
+        const words = removeNonAlphanumericAndSpaces(textCopy).split(" ");
+        for (let word of words) {
+            let convertedWord = "";
+            for (let character of word) {
+                convertedWord += fontCharacters[character] + " " || null;
+            }
+            sentence += convertedWord.trim() + "   ";
+        }
+        return sentence.trim();
+    } else if (fontName === "Braille") {
+        let sentence = "";
+        const words = removeNonAlphanumericAndSpaces(textCopy).split(" ");
+        for (let word of words) {
+            let convertedWord = "";
+            for (let character of word) {
+                convertedWord += fontCharacters[character] + " " || null;
+            }
+            sentence += convertedWord.trim() + "  ";
+        }
+        return sentence.trim();
+    } else {
+        let convertedText = "";
+        for (let character of text) {
+            convertedText += fontCharacters[character] || character;
+        }
+        return convertedText;
+    }
+}
+
+export function removeNonAlphanumericAndSpaces(text) {
+    const regex = /[^a-zA-Z0-9\s]/g;
+    const result = text.replace(regex, '');  
+    return result;
+}
+
 export function separateWords(text, separator) {
     const words = text.split(' ');  
     const separatedString = words.join(" " + separator + " ");  
