@@ -372,6 +372,7 @@ export default function Home() {
                                             <div className="font-output-text">{utils.convertText(outputText, font.name, font.characters)}</div>
                                             <button
                                                 type="button"
+                                                style={{ background: index === selectCopyButtonIndex ? "#FFFFFF" : "#0C0F0A", color: index === selectCopyButtonIndex ? "#0C0F0A" : "#FFFFFF"}}
                                                 onClick={() => copyFontToClipboard(utils.convertText(outputText, font.name, font.characters), index)}
                                             >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
                                         </div>
@@ -379,6 +380,7 @@ export default function Home() {
                                             <div className="font-output-text" style={{ fontFamily: font.name}}>{outputText}</div>
                                             <button
                                                 type="button"
+                                                style={{ background: index === selectCopyButtonIndex ? "#FFFFFF" : "#0C0F0A", color: index === selectCopyButtonIndex ? "#0C0F0A" : "#FFFFFF"}}
                                                 onClick={() => copyFontToClipboard(outputText, index)}
                                             >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
                                         </div>
