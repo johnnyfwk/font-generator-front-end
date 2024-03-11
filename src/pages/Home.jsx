@@ -334,6 +334,32 @@ export default function Home() {
                             >Clear Text</button>
                         </div>
 
+                        <section id="font-outputs-wrapper">
+                            {allFonts.map((font, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div className="font-output-name">{font.name}</div>
+                                        {font.characters
+                                            ? <div>                                        
+                                                <div className="font-output-text">{utils.convertText(outputText, font.name, font.characters)}</div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => copyFontToClipboard(utils.convertText(outputText, font.name, font.characters), index)}
+                                                >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
+                                            </div>
+                                            : <div>
+                                                <div className="font-output-text" style={{ fontFamily: font.name}}>{outputText}</div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => copyFontToClipboard(outputText, index)}
+                                                >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
+                                            </div>
+                                        }
+                                    </div>
+                                )
+                            })}
+                        </section>
+
                         <fieldset>
                             <legend>Options</legend>
                             <div id="font-options">
@@ -531,29 +557,7 @@ export default function Home() {
                     </form>
                 </section>
 
-                <section id="font-outputs-wrapper">
-                    {allFonts.map((font, index) => {
-                        return (
-                            <div key={index}>
-                                <div className="font-output-name">{font.name}</div>
-                                {font.characters
-                                    ? <div>                                        
-                                        <div className="font-output-text">{utils.convertText(outputText, font.name, font.characters)}</div>
-                                        <button
-                                            onClick={() => copyFontToClipboard(utils.convertText(outputText, font.name, font.characters), index)}
-                                        >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
-                                    </div>
-                                    : <div>
-                                        <div className="font-output-text" style={{ fontFamily: font.name}}>{outputText}</div>
-                                        <button
-                                            onClick={() => copyFontToClipboard(outputText, index)}
-                                        >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
-                                    </div>
-                                }
-                            </div>
-                        )
-                    })}
-                </section>
+                
             </main>
         </div>
     )
