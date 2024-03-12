@@ -334,7 +334,7 @@ export default function Home() {
             <div className="header-wrapper">
                 <header>
                     <h1>Font Generator: Create Customised Copy & Paste Fonts</h1>
-                    <p>Transform your text into unique fonts with our font generator. Our intuitive tool allows you to customise your text in various ways to suit your needs, whether its creating social media posts or writing eye-catching headlines.</p>
+                    <p>Transform your text into unique fonts with our font generator. Our intuitive tool allows you to customise your text in various ways to suit your needs, whether its for creating social media posts or writing eye-catching headlines.</p>
                 </header>
             </div>
             
@@ -377,7 +377,7 @@ export default function Home() {
                                             >{index === selectCopyButtonIndex ? "Copied" : "Copy"}</button>
                                         </div>
                                         : <div className="font-output-text-and-button-wrapper">
-                                            <div className="font-output-text" style={{ fontFamily: font.name}}>{outputText}</div>
+                                            <div className="font-output-text">{outputText}</div>
                                             <button
                                                 type="button"
                                                 style={{ background: index === selectCopyButtonIndex ? "#FFFFFF" : "#0C0F0A", color: index === selectCopyButtonIndex ? "#0C0F0A" : "#FFFFFF"}}
