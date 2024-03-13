@@ -19,13 +19,10 @@ export function convertTextToBraille(text, characters) {
     for (let i = 0; i < text.length; i++) {
         const char = text[i].toLowerCase();
         if (characters.hasOwnProperty(char)) {
-            brailleString += characters[char];
-            if (char === ' ') {
-                brailleString += ' ';
-            }
+            brailleString += characters[char] + " ";
         }
     }
-    return brailleString;
+    return brailleString.trim();
 }
 
 export function convertTextToMorseCode(text, characters) {
@@ -33,7 +30,7 @@ export function convertTextToMorseCode(text, characters) {
     for (let i = 0; i < text.length; i++) {
         const char = text[i].toLowerCase();
         if (characters.hasOwnProperty(char)) {
-            morseCodeString += characters[char] + ' ';
+            morseCodeString += characters[char] + " ";
         }
     }
     return morseCodeString.trim();

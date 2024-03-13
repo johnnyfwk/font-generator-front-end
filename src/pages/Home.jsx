@@ -42,6 +42,8 @@ export default function Home() {
     const [ isWordWrapper, setIsWordWrapper ] = useState(false);
     const [ isCharacterWrapper, setIsCharacterWrapper ] = useState(false);
 
+    const [ isFiltersVisible, setIsFiltersVisible ] = useState(false);
+
     useEffect(() => {
         let text;
 
@@ -127,7 +129,7 @@ export default function Home() {
         selectedClosingWrapper,
         isWordWrapper,
         isCharacterWrapper
-    ])
+    ]);
 
     function handleInputText(event) {
         setInputText(event.target.value);
@@ -136,11 +138,11 @@ export default function Home() {
         } else {
             setOutputText(placeholderText);
         }
-    }
+    };
 
     function handleClearTextButton() {
         setInputText("");
-    }
+    };
 
     function handleResetOptionsButton() {
         setIsReverseText(false);
@@ -162,7 +164,7 @@ export default function Home() {
         setIsSeparateCharacters(false);
         setSelectedPrefix("");
         setSelectedSuffix("");
-    }
+    };
 
     function copyFontToClipboard(text, buttonIndex) {
         setSelectCopyButtonIndex(buttonIndex)
@@ -172,7 +174,7 @@ export default function Home() {
 
     function handleReverseText() {
         setIsReverseText((currentTextReversedValue) => !currentTextReversedValue);
-    }
+    };
 
     function handleUppercase() {
         setIsUppercase((currentUppercaseValue) => !currentUppercaseValue);
@@ -184,7 +186,7 @@ export default function Home() {
         setIsCamelCase(false);
         setIsPascalCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handleLowercase() {
         setIsLowercase((currentLowercaseValue) => !currentLowercaseValue);
@@ -196,7 +198,7 @@ export default function Home() {
         setIsCamelCase(false);
         setIsPascalCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handleCapitalisation() {
         setIsCapitalisation((currentCapitalisationValue) => !currentCapitalisationValue);
@@ -208,7 +210,7 @@ export default function Home() {
         setIsCamelCase(false);
         setIsPascalCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handleCapitalisationOdd() {
         setIsCapitalisationOdd((currentCapitalisationOddValue) => !currentCapitalisationOddValue);
@@ -220,7 +222,7 @@ export default function Home() {
         setIsCamelCase(false);
         setIsPascalCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handleCapitalisationEven() {
         setIsCapitalisationEven((currentCapitalisationEvenValue) => !currentCapitalisationEvenValue);
@@ -232,7 +234,7 @@ export default function Home() {
         setIsCamelCase(false);
         setIsPascalCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handleCapitalisationRandom() {
         setIsCapitalisationRandom((currentCapitalisationRandomValue) => !currentCapitalisationRandomValue);
@@ -244,7 +246,7 @@ export default function Home() {
         setIsCamelCase(false);
         setIsPascalCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handleCamelCase() {
         setIsCamelCase((currentCamelCaseValue) => !currentCamelCaseValue);
@@ -256,7 +258,7 @@ export default function Home() {
         setIsCapitalisationRandom(false);
         setIsPascalCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handlePascalCase() {
         setIsPascalCase((currentPascalCaseValue) => !currentPascalCaseValue);
@@ -268,7 +270,7 @@ export default function Home() {
         setIsCapitalisationRandom(false);
         setIsCamelCase(false);
         setIsURLFriendly(false);
-    }
+    };
 
     function handleURLFriendly() {
         setIsURLFriendly((currentURLFriendlyValue) => !currentURLFriendlyValue);
@@ -280,47 +282,56 @@ export default function Home() {
         setIsCapitalisationRandom(false);
         setIsCamelCase(false);
         setIsPascalCase(false);
-    }
+    };
 
     function handleSelectSeparator(event) {
         setSelectedSeparator(event.target.value);
-    }
+    };
 
     function handleSeparateWordsCheckbox() {
         setIsSeparateWords((currentSeparateWordsValue) => !currentSeparateWordsValue);
         setIsSeparateCharacters(false);
-    }
+    };
 
     function handleSeparateCharactersCheckbox() {
         setIsSeparateCharacters((currentSeparateCharactersValue) => !currentSeparateCharactersValue);
         setIsSeparateWords(false);
-    }
+    };
 
     function handleSelectPrefix(event) {
         setSelectedPrefix(event.target.value);
-    }
+    };
 
     function handleSelectSuffix(event) {
         setSelectedSuffix(event.target.value);
-    }
+    };
 
     function handleSelectOpeningWrapper(event) {
         setSelectedOpeningWrapper(event.target.value);
-    }
+    };
 
     function handleWordWrapperCheckbox() {
         setIsWordWrapper((currentWordWrapperValue) => !currentWordWrapperValue);
         setIsCharacterWrapper(false);
-    }
+    };
 
     function handleSelectClosingWrapper(event) {
         setSelectedClosingWrapper(event.target.value);
-    }
+    };
 
     function handleCharacterWrapperCheckbox() {
         setIsCharacterWrapper((currentCharacterWrapperValue) => !currentCharacterWrapperValue);
         setIsWordWrapper(false);
-    }
+    };
+
+    function handleFiltersButton() {
+        setIsFiltersVisible((currentFiltersVisbility) => !currentFiltersVisbility);
+    };
+
+    const styleFormFilters = {
+        left: isFiltersVisible ? "0%" : "100%",
+        height: isFiltersVisible ? "100%" : "100%"
+    };
 
     return (
         <div>
@@ -339,24 +350,21 @@ export default function Home() {
             </div>
             
             <main>
-                <section>
-                    <form>
-                        <div>
-                            <textarea
-                                id="input-text"
-                                name="input-text"
-                                value={inputText}
-                                onChange={handleInputText}
-                                placeholder={placeholderText}
-                            ></textarea>
+                <section id="input-text-and-clear-text-button-wrapper-section">
+                    <form id="input-text-and-clear-text-button-wrapper">
+                        <textarea
+                            id="input-text"
+                            name="input-text"
+                            value={inputText}
+                            onChange={handleInputText}
+                            placeholder={placeholderText}
+                        ></textarea>
 
-                            <div>
-                                <button
-                                    type="button"
-                                    onClick={handleClearTextButton}
-                                >Clear Text</button>
-                            </div>
-                        </div>
+                        <button
+                            id="clear-text-button"
+                            type="button"
+                            onClick={handleClearTextButton}
+                        >x</button>
                     </form>
                 </section>
 
@@ -391,7 +399,9 @@ export default function Home() {
                     </section>
 
                     <section>
-                        <form id="form-filters">
+                        <form id="form-filters" style={styleFormFilters}>
+                            <p>Filters are instantly applied when you click on them.</p>
+
                             <div className="filter">
                                 <h3>Options</h3>
                                 <div id="font-options">
@@ -615,6 +625,8 @@ export default function Home() {
                     </ul>
                 </section>
             </main>
+
+            <div id="filters-button" onClick={handleFiltersButton}>⚙</div>
         </div>
     )
 }

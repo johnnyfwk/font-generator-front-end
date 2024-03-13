@@ -3,6 +3,8 @@
     --white: #FFFFFF;
     --max-width: 1000px;
     --padding-sides: 20px;
+    --input-and-output-text-font-size: 1.2rem;
+    --input-and-output-text-line-height: 1.8rem;
 
     --night: #0C0F0A;
     --outer-space: #494B48;
@@ -103,24 +105,47 @@ ul {
     line-height: 1.6rem;
 }
 
-form {
+#input-text-and-clear-text-button-wrapper-section {
+    position: sticky;
+    top: 0;
+}
+
+#input-text-and-clear-text-button-wrapper {
     display: grid;
-    gap: 30px;
+    grid-template-columns: auto 40px;
+}
+
+#clear-text-button {
+    height: 100%;
+    border: 1px solid var(--silver);
+    font-size: 2rem;
+}
+
+#clear-text-button:hover {
+    background: var(--rose);
 }
 
 #form-filters {
-    position: sticky;
-    top: 0;
     background: var(--platinum);
+    display: grid;
+    gap: 20px;
     padding: 20px;
     border: 1px solid var(--silver);
     font-size: 0.9rem;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    transition: left 0.2s ease;
 }
 
 #form-filters-and-font-outputs-wrapper {
     max-width: var(--max-width);
     display: grid;
     gap: 20px;
+    align-items: start;
 }
 
 select {
@@ -151,12 +176,12 @@ option {
 textarea {
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
-    height: 50px;
+    height: 100px;
     resize: none;
     padding: 10px;
     border: 1px solid var(--silver);
-    font-size: 1.2rem;
-    
+    font-size: var(--input-and-output-text-font-size);
+    line-height: var(--input-and-output-text-line-height);
 }
 
 button {
@@ -223,8 +248,8 @@ button:hover {
 
 .font-output-text {
     word-break: break-all;
-    font-size: 1.5rem;
-    line-height: 2rem;
+    font-size: var(--input-and-output-text-font-size);
+    line-height: var(--input-and-output-text-line-height);
 }
 
 #footer-wrapper {
@@ -263,8 +288,43 @@ footer a:hover {
     color: var(--battleship-gray);
 }
 
+#filters-button {
+    background: var(--turquoise);
+    color: var(--night);
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: bold;
+    position: fixed;
+    right: var(--padding-sides);
+    bottom: var(--padding-sides);
+    width: 40px;
+    height: 40px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    padding: 0 2px 2px 2px;
+}
+
 @media screen and (min-width: 769px) {
     #form-filters-and-font-outputs-wrapper {
-        grid-template-columns: 75% auto;
+        grid-template-columns: auto 250px;
+    }
+
+    .font-output-text {
+        font-size: 1.5rem;
+        line-height: 2.2rem;
+    }
+
+    #form-filters {
+        position: initial;
+        top: initial;
+        left: initial;
+        width: initial;
+        height: initial;
+        overflow: initial;
+    }
+
+    #filters-button {
+        display: none;
     }
 }
