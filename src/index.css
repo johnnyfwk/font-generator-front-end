@@ -302,7 +302,7 @@ footer a:hover {
     display: grid;
     justify-content: center;
     align-content: center;
-    padding: 0 2px 2px 2px;
+    padding: 25px;
 }
 
 @media screen and (min-width: 769px) {
