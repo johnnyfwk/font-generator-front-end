@@ -338,13 +338,13 @@ export default function Home() {
             <Helmet>
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://fontgenerator.co.uk/" />
-                <title>Font Generator: Create Customised Copy & Paste Fonts | FontGenerator.co.uk</title>
+                <title>Font Generator: Create Custom Copy & Paste Fonts | FontGenerator.co.uk</title>
                 <meta name="description" content="Transform your words with various font styles, casing options, and formatting features. Perfect for social media, websites, and more." />
             </Helmet>
 
             <div className="header-wrapper">
                 <header>
-                    <h1>Font Generator: Create Customised Copy & Paste Fonts</h1>
+                    <h1>Font Generator: Create Custom Copy & Paste Fonts</h1>
                     <p>Transform your text into unique fonts with our font generator. Our intuitive tool allows you to customise your text in various ways to suit your needs, whether its for creating social media posts or writing eye-catching headlines.</p>
                 </header>
             </div>
