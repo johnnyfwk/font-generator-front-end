@@ -400,8 +400,6 @@ export default function Home() {
 
                     <section>
                         <form id="form-filters" style={styleFormFilters}>
-                            <p>Filters are instantly applied when you click on them.</p>
-
                             <div className="filter">
                                 <h3>Options</h3>
                                 <div id="font-options">
